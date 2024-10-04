@@ -4,12 +4,13 @@ import {Icons} from '../components';
 import fontsize from '../themes/fontsize';
 import {colors} from '../themes';
 import {wp} from '../utils/dimension';
-import useBackHandler from '../utils/backbuttonhandler';
 
-const BackNavHeader = ({pageTitle}) => {
+const BackNavHeader = ({pageTitle, navigation}) => {
   const isDarkMode = rn.useColorScheme() === 'dark';
 
-  const onPressBackIcon = useBackHandler();
+  const onPressBackIcon = () => {
+    navigation.goBack();
+  };
 
   return (
     <rn.View style={styles.titleContainer}>

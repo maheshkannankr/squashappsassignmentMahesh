@@ -26,7 +26,7 @@ const CategoryScreen = ({navigation}) => {
       contentContainerStyle={{
         gap: wp(10),
       }}>
-      <BackNavHeader pageTitle={'Categories '} />
+      <BackNavHeader navigation={navigation} pageTitle={'Categories'} />
       {quizCategories.map((category, index) => {
         return (
           <CategoryLargeBanner

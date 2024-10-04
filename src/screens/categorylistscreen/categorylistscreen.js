@@ -26,7 +26,7 @@ const CategoryListScreen = ({navigation}) => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      <BackNavHeader pageTitle={'History Quiz'} />
+      <BackNavHeader navigation={navigation} pageTitle={'History Quiz'} />
       <rn.View style={styles.quizListContainer}>
         <rn.ScrollView contentContainerStyle={{gap: wp(16)}}>
           {dummyArray.map((dummy, index) => {
