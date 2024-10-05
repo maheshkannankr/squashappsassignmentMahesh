@@ -63,7 +63,7 @@ const FavTopicScreen = ({navigation}) => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      <BackNavHeader pageTitle={'Choose Your Favourite Topic'} />
+      <BackNavHeader navigation={navigation} pageTitle={'Choose Your Favourite Topic'} />
       <rn.View style={styles.inputFormContainer}>
         <rn.Image
           source={require('../../../assets/images/favtopic/girl.png')}

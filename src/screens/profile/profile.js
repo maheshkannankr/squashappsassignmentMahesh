@@ -139,7 +139,7 @@ const ProfileScreen = ({navigation}) => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      <BackNavHeader pageTitle={'Profile'} />
+      <BackNavHeader navigation={navigation} pageTitle={'Profile'} />
       {renderProfilePhotoView()}
       {renderProfileRankingView()}
       {renderProfilePerformanceView()}

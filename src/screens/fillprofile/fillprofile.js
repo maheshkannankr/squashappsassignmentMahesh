@@ -101,7 +101,7 @@ const FillProfileScreen = ({navigation}) => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      <BackNavHeader pageTitle={'Fill Profile'} />
+      <BackNavHeader navigation={navigation} pageTitle={'Fill Profile'} />
       <rn.View style={styles.inputFormContainer}>
         <InputContainer
           Logo={Icons.ProfileLogo}

@@ -59,7 +59,7 @@ const LanguageSelectionScreen = ({navigation}) => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      <BackNavHeader pageTitle={'Select Language'} />
+      <BackNavHeader navigation={navigation} pageTitle={'Select Language'} />
       <rn.View style={styles.langOptionsContainer}>
         {languages.map((lang, index) => (
           <LanguageOptionContainer

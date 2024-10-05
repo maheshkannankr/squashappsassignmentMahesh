@@ -111,7 +111,7 @@ const QuizTestScreen = () => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      <BackNavHeader pageTitle={'Level 2'} />
+      <BackNavHeader navigation={navigation} pageTitle={'Level 2'} />
       <rn.View style={styles.quizTestContainer}>
         {renderIndicatorView()}
         {renderQuestionImageView()}

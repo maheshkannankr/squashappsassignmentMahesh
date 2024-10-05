@@ -15,7 +15,7 @@ const RankingScreen = ({navigation}) => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      <BackNavHeader pageTitle={'Ranking'} />
+      <BackNavHeader navigation={navigation} pageTitle={'Ranking'} />
     </rn.View>
   );
 };
