@@ -1,37 +1,83 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {wp, hp} from '../../utils/dimension';
-import {colors, fontsize} from '../../themes';
+import {colors, fontfamily, fontsize} from '../../themes';
 import * as rn from 'react-native';
 import {BackNavHeader, Button, Icons} from '../../components';
+import {quizQuestions} from '../../utils';
 
-const QuizTestScreen = () => {
-  const [question, setQuestion] = useState('');
-  const [options, setOption] = useState([
-    {option: ''},
-    {option: ''},
-    {option: ''},
-    {option: ''},
-  ]);
-
-  useEffect(() => {
-    setQuestion(
-      'In which area of the world did the Ancient Mayan population live?',
-    );
-
-    setOption([
-      {option: '1956'},
-      {option: '1994'},
-      {option: '2002'},
-      {option: '2010'},
-    ]);
-  }, []);
+const QuizTestScreen = ({navigation}) => {
+  const [{question, options, image}, setQuestionsOptions] = useState({
+    question: '',
+    options: ['', '', '', ''],
+    image: null,
+  });
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const [selectedOption, setSelectedOption] = useState(null);
 
+  const questionsSet = quizQuestions;
+
+  useEffect(() => {
+    getCurrentIndexQuestions(currentQuestionIndex);
+  }, [getCurrentIndexQuestions, currentQuestionIndex]);
+
+  const getCurrentIndexQuestions = useCallback(
+    index => {
+      setQuestionsOptions(prevState => ({
+        ...prevState,
+        question: questionsSet[index].question,
+        options: questionsSet[index].options,
+        image: questionsSet[index].image,
+      }));
+    },
+    [questionsSet],
+  );
+
+  const onPressNextButton = () => {
+    setSelectedOption(null);
+    let currentIndex = currentQuestionIndex;
+    if (currentIndex < 9) {
+      setCurrentQuestionIndex(currentIndex + 1);
+      getCurrentIndexQuestions(currentIndex);
+    }
+  };
+  const onPressPrevButton = () => {
+    setSelectedOption(null);
+    let currentIndex = currentQuestionIndex;
+    if (currentIndex > 0) {
+      setCurrentQuestionIndex(currentIndex - 1);
+      getCurrentIndexQuestions(currentIndex);
+    }
+  };
+
+  const onSelectOption = optionIndex => {
+    setSelectedOption(optionIndex);
+  };
+
   const isDarkMode = rn.useColorScheme() === 'dark';
 
-  const renderIndicatorView = () => {
-    return <rn.View style={{flex: 0.3, width: '100%'}} />;
+  const renderIndicatorView = ({currentIndex = 0}) => {
+    return (
+      <rn.View style={styles.quizProgressContainerView}>
+        {new Array(10).fill(' ').map((item, index) => {
+          return (
+            <rn.View
+              key={index}
+              style={[
+                styles.quizProgressView,
+
+                {
+                  backgroundColor:
+                    index <= currentIndex
+                      ? colors.themePrimary
+                      : colors.borderColor,
+                },
+              ]}
+            />
+          );
+        })}
+      </rn.View>
+    );
   };
 
   const renderQuestionImageView = () => {
@@ -42,18 +88,16 @@ const QuizTestScreen = () => {
             styles.questionTextStyle,
             {color: isDarkMode ? colors.white : colors.primaryFont},
           ]}>
-          {question}
+          {question ? question : ''}
         </rn.Text>
-        <rn.Image
-          source={require('../../../assets/images/questions/image.png')}
-        />
+        {image && <rn.Image style={styles.quizImgContainer} source={image} />}
       </rn.View>
     );
   };
 
-  const renderSingleOptionContainer = ({option, isSelected}) => {
+  const renderSingleOptionContainer = ({option, isSelected, index}) => {
     return (
-      <rn.View
+      <rn.TouchableOpacity
         style={[
           styles.optionItem,
           {
@@ -63,11 +107,17 @@ const QuizTestScreen = () => {
               ? colors.levelCardBackGround
               : colors.white,
           },
-        ]}>
+        ]}
+        onPress={() => onSelectOption(index)}>
         <rn.Text
           style={[
             styles.optionText,
-            {color: isDarkMode ? colors.white : colors.primaryFont},
+            {
+              color: isDarkMode ? colors.white : colors.primaryFont,
+              fontFamily: isSelected
+                ? fontfamily.fSemiBold
+                : fontfamily.fRegular,
+            },
           ]}>
           {option}
         </rn.Text>
@@ -76,7 +126,7 @@ const QuizTestScreen = () => {
         ) : (
           <Icons.MCQOptionSelected />
         )}
-      </rn.View>
+      </rn.TouchableOpacity>
     );
   };
 
@@ -87,8 +137,9 @@ const QuizTestScreen = () => {
           return (
             <rn.View key={index} style={[styles.singleOptionContainer]}>
               {renderSingleOptionContainer({
-                option: option.option,
-                isSelected: index === 1,
+                option: option,
+                isSelected: index === selectedOption,
+                index,
               })}
             </rn.View>
           );
@@ -99,8 +150,8 @@ const QuizTestScreen = () => {
   const renderButtonsView = () => {
     return (
       <rn.View style={styles.buttonContainer}>
-        <Button isEmpty label="Previous" />
-        <Button label="Next" />
+        <Button isEmpty label="Previous" onTouchButton={onPressPrevButton} />
+        <Button label="Next" onTouchButton={onPressNextButton} />
       </rn.View>
     );
   };
@@ -113,7 +164,7 @@ const QuizTestScreen = () => {
       ]}>
       <BackNavHeader navigation={navigation} pageTitle={'Level 2'} />
       <rn.View style={styles.quizTestContainer}>
-        {renderIndicatorView()}
+        {renderIndicatorView({currentIndex: currentQuestionIndex})}
         {renderQuestionImageView()}
         {renderMultipleOptionsView()}
         {renderButtonsView()}
@@ -135,6 +186,7 @@ const styles = rn.StyleSheet.create({
     flex: 10,
     width: '100%',
     height: '100%',
+    rowGap: wp(10),
     paddingHorizontal: wp(10),
     alignItems: 'center',
     justifyContent: 'center',
@@ -142,9 +194,34 @@ const styles = rn.StyleSheet.create({
 
   questionImageView: {
     flex: 1.5,
+    rowGap: wp(10),
+    width: '100%',
   },
 
-  singleOptionContainer: {flex: 1, width: '100%'},
+  quizImgContainer: {
+    flex: 1,
+    width: '100%',
+    borderRadius: wp(30),
+    resizeMode: 'stretch',
+  },
+
+  quizProgressView: {
+    height: wp(5),
+    flex: 1,
+    borderRadius: wp(10),
+  },
+
+  quizProgressContainerView: {
+    flex: 0.1,
+    width: '100%',
+    columnGap: wp(2),
+    flexDirection: 'row',
+  },
+
+  singleOptionContainer: {
+    flex: 1,
+    width: '100%',
+  },
 
   optionItem: {
     width: '100%',
@@ -169,8 +246,11 @@ const styles = rn.StyleSheet.create({
   },
 
   questionTextStyle: {
-    fontSize: fontsize.descriptionSize,
+    fontSize: fontsize.secondaryHeading,
     fontWeight: 600,
+    flex: 0.3,
+    marginHorizontal: wp(5),
+    fontFamily: fontfamily.fSemiBold,
   },
 
   buttonContainer: {
