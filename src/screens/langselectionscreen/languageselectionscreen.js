@@ -32,7 +32,9 @@ const LanguageOptionContainer = ({
         },
       ]}
       onPress={onSelectLanguage}>
-      <rn.Image style={[styles.flagImageStyle]} source={{uri: flagAddress}} />
+      <rn.View style={styles.flagImageStyle}>
+        <rn.Image style={styles.flagImageStyle} source={{uri: flagAddress}} />
+      </rn.View>
       <rn.Text style={{color: isDarkMode ? colors.white : colors.primaryFont}}>
         {languageName}
       </rn.Text>
@@ -127,6 +129,7 @@ const styles = rn.StyleSheet.create({
   },
 
   flagImageStyle: {
+    elevation: 4,
     resizeMode: 'stretch',
     height: hp(70),
     width: wp(100),

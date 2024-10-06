@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {wp} from '../utils/dimension';
-import {colors} from '../themes';
+import {colors, fontfamily} from '../themes';
 import * as rn from 'react-native';
 import {RatingView} from '../components';
 import fontsize from '../themes/fontsize';
@@ -12,6 +12,7 @@ const CategoryLargeBanner = ({
   imageAddress,
   index,
   onPressCategoryBanner,
+  leftImageView = false,
 }) => {
   const playNowButtonView = () => {
     return (
@@ -50,11 +51,10 @@ const CategoryLargeBanner = ({
         styles.bannerOuterContainer,
         {
           backgroundColor: bgColor,
-          borderRadius: wp(10),
         },
       ]}>
-      {renderLeftSideView()}
-      {renderRightSideView()}
+      {!leftImageView ? renderRightSideView() : renderLeftSideView()}
+      {leftImageView ? renderRightSideView() : renderLeftSideView()}
     </rn.TouchableOpacity>
   );
 };
@@ -64,33 +64,34 @@ const styles = rn.StyleSheet.create({
     width: '100%',
     height: wp(150),
     padding: wp(5),
-    borderRadius: wp(10),
+    borderRadius: wp(25),
     flexDirection: 'row',
+    overflow: 'hidden',
   },
 
   categoryBannerLeft: {
     flex: 1,
     padding: wp(5),
+    paddingHorizontal: wp(10),
     alignItems: 'flex-start',
     justifyContent: 'space-between',
   },
   categoryBannerRight: {
     flex: 1.5,
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'flex-end',
   },
 
   bannerQuizCategoryNameText: {
     color: colors.white,
     fontSize: fontsize.headingSize,
-    fontWeight: '800',
+    fontFamily: fontfamily.fBold,
   },
 
   bannerLegoView: {
     flex: 1,
     resizeMode: 'contain',
     width: '100%',
-    height: '100%',
   },
 
   starView: {
@@ -108,7 +109,7 @@ const styles = rn.StyleSheet.create({
 
   playNowButtonTextView: {
     fontSize: fontsize.descriptionSize,
-    fontWeight: '900',
+    fontFamily: fontfamily.fBold,
     textAlign: 'center',
     color: colors.themePrimary,
   },

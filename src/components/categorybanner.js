@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {wp} from '../utils/dimension';
-import {colors} from '../themes';
+import {colors, fontfamily} from '../themes';
 import * as rn from 'react-native';
 import {RatingView} from '../components';
 import fontsize from '../themes/fontsize';
@@ -59,8 +59,8 @@ const styles = rn.StyleSheet.create({
 
   bannerQuizCategoryNameText: {
     color: colors.white,
+    fontFamily: fontfamily.fBold,
     fontSize: fontsize.secondaryHeading,
-    fontWeight: '800',
   },
 
   bannerLegoView: {

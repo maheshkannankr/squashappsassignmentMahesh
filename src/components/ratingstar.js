@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {wp, hp} from '../utils/dimension';
-import {colors} from '../themes';
+import {colors, fontfamily} from '../themes';
 import * as rn from 'react-native';
 import {Icons} from '../components';
 import fontsize from '../themes/fontsize';
@@ -33,7 +33,7 @@ const styles = rn.StyleSheet.create({
 
   ratingTotalText: {
     marginLeft: wp(5),
-    fontWeight: '800',
+    fontFamily: fontfamily.fBold,
     color: colors.white,
     fontSize: fontsize.normalSize,
   },

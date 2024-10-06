@@ -150,7 +150,12 @@ const QuizTestScreen = ({navigation}) => {
   const renderButtonsView = () => {
     return (
       <rn.View style={styles.buttonContainer}>
-        <Button isEmpty label="Previous" onTouchButton={onPressPrevButton} />
+        <Button
+          isEmpty
+          label="Previous"
+          onTouchButton={onPressPrevButton}
+          isDisabled={currentQuestionIndex === 0}
+        />
         <Button label="Next" onTouchButton={onPressNextButton} />
       </rn.View>
     );

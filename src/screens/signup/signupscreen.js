@@ -1,6 +1,6 @@
 import React from 'react';
 import {wp, hp} from '../../utils/dimension';
-import {colors} from '../../themes';
+import {colors, fontfamily} from '../../themes';
 import * as rn from 'react-native';
 import {Icons} from '../../components';
 import fontsize from '../../themes/fontsize';
@@ -119,6 +119,7 @@ const styles = rn.StyleSheet.create({
     width: '100%',
     height: '100%',
     alignItems: 'center',
+    paddingHorizontal: wp(10),
     justifyContent: 'center',
   },
 
@@ -131,14 +132,17 @@ const styles = rn.StyleSheet.create({
 
   appNameTextStyle: {
     fontSize: fontsize.appTitle,
+    fontFamily: fontfamily.fBold,
   },
   descTextStyle: {
     textAlign: 'center',
+    fontFamily: fontfamily.fRegular,
     color: colors.secondaryFont,
     fontSize: fontsize.descriptionSize,
   },
   alreadyAccountTextStyle: {
     textAlign: 'center',
+    fontFamily: fontfamily.fMedium,
     fontSize: fontsize.descriptionSize,
   },
 
@@ -183,6 +187,7 @@ const styles = rn.StyleSheet.create({
     textAlign: 'center',
     flex: 1,
     color: colors.primaryFont,
+    fontFamily: fontfamily.fRegular,
     fontSize: fontsize.secondaryHeading,
   },
 });

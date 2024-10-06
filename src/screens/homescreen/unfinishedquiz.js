@@ -1,6 +1,6 @@
 import React from 'react';
 import {wp, hp} from '../../utils/dimension';
-import {colors} from '../../themes';
+import {colors, fontfamily} from '../../themes';
 import * as rn from 'react-native';
 import {Icons, QuizLevelCard} from '../../components';
 import fontsize from '../../themes/fontsize';
@@ -49,13 +49,14 @@ const styles = rn.StyleSheet.create({
   },
 
   unFinishedHeadingText: {
-    fontWeight: 'bold',
     fontSize: fontsize.buttonText,
+    fontFamily: fontfamily.fBold,
   },
 
   unFinishedSeeAllText: {
     fontSize: fontsize.descriptionSize,
     color: colors.themePrimary,
+    fontFamily: fontfamily.fRegular,
   },
 
   cardContainer: {

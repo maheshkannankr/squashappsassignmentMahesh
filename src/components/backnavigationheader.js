@@ -2,8 +2,8 @@ import React from 'react';
 import * as rn from 'react-native';
 import {Icons} from '../components';
 import fontsize from '../themes/fontsize';
-import {colors} from '../themes';
-import {wp} from '../utils/dimension';
+import {colors, fontfamily} from '../themes';
+import {hp, wp} from '../utils/dimension';
 
 const BackNavHeader = ({pageTitle, navigation}) => {
   const isDarkMode = rn.useColorScheme() === 'dark';
@@ -30,7 +30,7 @@ const BackNavHeader = ({pageTitle, navigation}) => {
 
 const styles = rn.StyleSheet.create({
   titleContainer: {
-    flex: 1,
+    height: hp(80),
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
@@ -40,7 +40,7 @@ const styles = rn.StyleSheet.create({
   titleTextStyle: {
     flex: 1,
     textAlign: 'center',
-    fontWeight: '900',
+    fontFamily: fontfamily.fBold,
     fontSize: fontsize.headingSize,
   },
 });

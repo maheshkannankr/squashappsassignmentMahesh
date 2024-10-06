@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {wp, hp} from '../../utils/dimension';
-import {colors} from '../../themes';
+import {colors, fontfamily} from '../../themes';
 import * as rn from 'react-native';
 import {BackNavHeader, Button, Icons} from '../../components';
 import fontsize from '../../themes/fontsize';
@@ -34,7 +34,15 @@ const SelectionContainer = ({
             : colors.favItemCardBackGround,
         },
       ]}>
-      <rn.Text style={styles.favItemText}>{value}</rn.Text>
+      <rn.Text
+        style={[
+          styles.favItemText,
+          {
+            color: selected ? colors.white : colors.primaryFont,
+          },
+        ]}>
+        {value}
+      </rn.Text>
     </rn.TouchableOpacity>
   );
 };
@@ -63,7 +71,10 @@ const FavTopicScreen = ({navigation}) => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      <BackNavHeader navigation={navigation} pageTitle={'Choose Your Favourite Topic'} />
+      <BackNavHeader
+        navigation={navigation}
+        pageTitle={'Choose Your Favourite Topic'}
+      />
       <rn.View style={styles.inputFormContainer}>
         <rn.Image
           source={require('../../../assets/images/favtopic/girl.png')}
@@ -130,7 +141,7 @@ const styles = rn.StyleSheet.create({
   },
 
   favItemText: {
-    fontWeight: '600',
+    fontFamily: fontfamily.fSemiBold,
     color: colors.primaryFont,
     fontSize: fontsize.descriptionSize,
   },

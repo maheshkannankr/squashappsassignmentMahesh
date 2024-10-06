@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {wp, hp} from '../../utils/dimension';
-import {colors} from '../../themes';
+import {colors, fontfamily} from '../../themes';
 import * as rn from 'react-native';
 import {CategoryBanner, Icons} from '../../components';
 import fontsize from '../../themes/fontsize';
@@ -101,13 +101,14 @@ const styles = rn.StyleSheet.create({
   },
 
   categoriesHeadingText: {
-    fontWeight: 'bold',
+    fontFamily: fontfamily.fBold,
     fontSize: fontsize.buttonText,
   },
 
   categoriesSeeAllText: {
     fontSize: fontsize.descriptionSize,
     color: colors.themePrimary,
+    fontFamily: fontfamily.fRegular,
   },
 
   //   Banner Styles
