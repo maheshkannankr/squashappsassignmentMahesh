@@ -1,6 +1,6 @@
 import React from 'react';
 import {wp, hp} from '../../utils/dimension';
-import {colors} from '../../themes';
+import {colors, fontfamily} from '../../themes';
 import * as rn from 'react-native';
 import {Icons} from '../../components';
 import fontsize from '../../themes/fontsize';
@@ -77,6 +77,7 @@ const styles = rn.StyleSheet.create({
   },
   appTitleText: {
     fontSize: fontsize.headingSize,
+    fontFamily: fontfamily.fExtraBold,
   },
 
   coinsView: {

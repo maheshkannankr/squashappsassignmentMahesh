@@ -37,6 +37,7 @@ const CategoryScreen = ({navigation}) => {
             key={index}
             index={index}
             onPressCategoryBanner={onPressCategoryBanner}
+            leftImageView={index % 2 === 0}
           />
         );
       })}

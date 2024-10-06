@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {wp, hp} from '../../utils/dimension';
-import {colors} from '../../themes';
+import {colors, fontfamily} from '../../themes';
 import * as rn from 'react-native';
 import {BackNavHeader, Button, Icons} from '../../components';
 import fontsize from '../../themes/fontsize';
@@ -38,7 +38,9 @@ const InputContainer = ({
           value={value}
           onChangeText={onChangeFieldValue}
           placeholder={placeholder}
-          placeholderTextColor={isDarkMode ? colors.white : colors.primaryFont}
+          placeholderTextColor={
+            isDarkMode ? colors.white : colors.placeHolderFontColor
+          }
         />
       ) : (
         <rn.View style={styles.dropDownContainerView}>
@@ -49,11 +51,10 @@ const InputContainer = ({
             ]}
             placeholderStyle={[
               styles.placeholderStyle,
-              {color: isDarkMode ? colors.white : colors.primaryFont},
+              {color: isDarkMode ? colors.white : colors.placeHolderFontColor},
             ]}
             selectedTextStyle={[
               styles.selectedTextStyle,
-
               {
                 color: isDarkMode ? colors.white : colors.primaryFont,
                 backgroundColor: isDarkMode ? colors.black : colors.white,
@@ -64,13 +65,16 @@ const InputContainer = ({
             }}
             activeColor={colors.dropDownSelected}
             data={dropDownData}
-            placeholderTextColor
             maxHeight={300}
             labelField="label"
             valueField="value"
             placeholder={!isFocus ? placeholder : '...'}
             searchPlaceholder="Search..."
-            value={sampleValue}
+            value={sampleValue}itrm
+            itemTextStyle={{
+              color: isDarkMode ? colors.white : colors.black,
+              fontFamily: fontfamily.fRegular,
+            }}
             onFocus={() => setIsFocus(true)}
             onBlur={() => setIsFocus(false)}
             onChange={item => {
@@ -177,6 +181,9 @@ const styles = rn.StyleSheet.create({
     width: '100%',
     padding: 0,
     paddingHorizontal: wp(10),
+    textAlign: 'center',
+    fontSize: fontsize.descriptionSize,
+    fontFamily: fontfamily.fRegular,
   },
 
   dropDownContainerView: {
@@ -188,6 +195,16 @@ const styles = rn.StyleSheet.create({
   dropdown: {
     width: '100%',
     paddingHorizontal: wp(10),
+  },
+
+  placeholderStyle: {
+    textAlign: 'center',
+    fontFamily: fontfamily.fRegular,
+  },
+
+  selectedTextStyle: {
+    textAlign: 'center',
+    fontFamily: fontfamily.fSemiBold,
   },
 });
 export default FillProfileScreen;

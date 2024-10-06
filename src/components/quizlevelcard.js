@@ -2,7 +2,7 @@ import React from 'react';
 import * as rn from 'react-native';
 import {Button, Icons, RatingView} from '../components';
 import fontsize from '../themes/fontsize';
-import {colors} from '../themes';
+import {colors, fontfamily} from '../themes';
 import {hp, wp} from '../utils/dimension';
 
 const QuizLevelCard = ({
@@ -68,13 +68,14 @@ const QuizLevelCard = ({
 
 const styles = rn.StyleSheet.create({
   cardContainer: {
-    width: '100%',
+    width: '98%',
     flexDirection: 'row',
     alignItems: 'center',
     padding: wp(10),
     borderRadius: wp(10),
     shadowColor: '#000',
     elevation: 2,
+    margin: wp(3),
     justifyContent: 'space-between',
   },
 
@@ -87,7 +88,7 @@ const styles = rn.StyleSheet.create({
   categoryTextStyle: {
     fontSize: fontsize.normalSize,
     color: colors.themePrimary,
-    fontWeight: '900',
+    fontFamily: fontfamily.fBold,
   },
 
   LevelRatingView: {
@@ -98,7 +99,7 @@ const styles = rn.StyleSheet.create({
 
   levelTextStyle: {
     fontSize: fontsize.levelCardLevelText,
-    fontWeight: 'bold',
+    fontFamily: fontfamily.fBold,
   },
 
   progressView: {
@@ -126,6 +127,7 @@ const styles = rn.StyleSheet.create({
 
   timerTextStyle: {
     fontSize: fontsize.normalSize,
+    fontFamily: fontfamily.fRegular,
   },
 
   buttonViewStyle: {
@@ -139,6 +141,7 @@ const styles = rn.StyleSheet.create({
     textAlign: 'center',
     fontSize: fontsize.secondaryHeading,
     color: colors.white,
+    fontFamily: fontfamily.fBold,
   },
 });
 export default QuizLevelCard;

@@ -1,14 +1,19 @@
 import React from 'react';
 import {wp, hp} from '../utils/dimension';
-import {colors} from '../themes';
+import {colors, fontfamily} from '../themes';
 import * as rn from 'react-native';
 import {Icons} from '../components';
 import {fontsize} from '../themes';
-const Button = ({label = '', isEmpty = false, onTouchButton = () => {}}) => {
+const Button = ({
+  label = '',
+  isEmpty = false,
+  onTouchButton = () => {},
+  isDisabled = false,
+}) => {
   const isDarkMode = rn.useColorScheme() === 'dark';
 
   const onPresButton = () => {
-    if (onTouchButton) {
+    if (onTouchButton && !isDisabled) {
       onTouchButton();
     }
   };
@@ -19,10 +24,13 @@ const Button = ({label = '', isEmpty = false, onTouchButton = () => {}}) => {
         styles.container,
         {
           backgroundColor: !isEmpty
-            ? colors.themePrimary
+            ? isDisabled
+              ? colors.disabledButton
+              : colors.themePrimary
             : isDarkMode
             ? colors.black
             : colors.white,
+          borderColor: isDisabled ? colors.disabledButton : colors.themePrimary,
         },
       ]}
       onPress={onPresButton}>
@@ -34,6 +42,8 @@ const Button = ({label = '', isEmpty = false, onTouchButton = () => {}}) => {
               ? colors.white
               : isDarkMode
               ? colors.white
+              : isDisabled
+              ? colors.disabledText
               : colors.black,
           },
         ]}>
@@ -49,11 +59,14 @@ const styles = rn.StyleSheet.create({
     height: wp(50),
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: colors.themePrimary,
     borderWidth: 1,
     borderRadius: wp(10),
   },
 
-  buttonLabelTextStyle: {color: colors.white, fontSize: fontsize.buttonText},
+  buttonLabelTextStyle: {
+    color: colors.white,
+    fontSize: fontsize.buttonText,
+    fontFamily: fontfamily.fRegular,
+  },
 });
 export default Button;

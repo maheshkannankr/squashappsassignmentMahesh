@@ -9,6 +9,7 @@ import {appName} from '../../utils';
 import {BarChart} from 'react-native-gifted-charts';
 
 const GraphChart = () => {
+  const {width, height} = rn.Dimensions.get('window');
   const isDarkMode = rn.useColorScheme() === 'dark';
 
   const data = [
@@ -23,7 +24,7 @@ const GraphChart = () => {
         data={data}
         spacing={50}
         height={130}
-        width={250}
+        width={width - wp(150)}
         noOfSections={4}
         yAxisThickness={0}
         xAxisThickness={0}

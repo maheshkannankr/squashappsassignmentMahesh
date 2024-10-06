@@ -133,12 +133,86 @@ const favTopicLists = [
   {name: '🎥 Film & Media', selected: false},
 ];
 
+const quizQuestions = [
+  {
+    question: 'What is the capital of France?',
+    options: ['Paris', 'London', 'Berlin', 'Rome'],
+    image: require('../../assets/images/quizimages/france.jpg'),
+    answer: 'Paris',
+  },
+  {
+    question: 'Which planet is known as the Red Planet?',
+    options: ['Earth', 'Mars', 'Jupiter', 'Venus'],
+    image: require('../../assets/images/quizimages/mars.jpg'),
+    answer: 'Mars',
+  },
+  {
+    question: 'Who wrote the play "Romeo and Juliet"?',
+    options: [
+      'William Shakespeare',
+      'Charles Dickens',
+      'Mark Twain',
+      'Jane Austen',
+    ],
+    image: require('../../assets/images/quizimages/romeojuliet.jpg'),
+    answer: 'William Shakespeare',
+  },
+  {
+    question: 'Which element has the chemical symbol "O"?',
+    options: ['Oxygen', 'Gold', 'Hydrogen', 'Iron'],
+    image: require('../../assets/images/quizimages/oxygen.jpg'),
+    answer: 'Oxygen',
+  },
+  {
+    question: 'What is the largest mammal in the world?',
+    options: ['Elephant', 'Blue Whale', 'Giraffe', 'Rhino'],
+    image: require('../../assets/images/quizimages/mammals.jpg'),
+    answer: 'Blue Whale',
+  },
+  {
+    question: 'Which country is home to the kangaroo?',
+    options: ['Australia', 'India', 'Brazil', 'Canada'],
+    image: require('../../assets/images/quizimages/kangaroo.jpg'),
+    answer: 'Australia',
+  },
+  {
+    question: 'What is the main ingredient in guacamole?',
+    options: ['Tomato', 'Avocado', 'Carrot', 'Potato'],
+    image: require('../../assets/images/quizimages/guacamole.jpg'),
+    answer: 'Avocado',
+  },
+  {
+    question: 'Which language is primarily spoken in Brazil?',
+    options: ['Portuguese', 'Spanish', 'English', 'French'],
+    image: require('../../assets/images/quizimages/brazil.jpg'),
+    answer: 'Portuguese',
+  },
+  {
+    question: 'Who is known as the father of modern physics?',
+    options: [
+      'Isaac Newton',
+      'Albert Einstein',
+      'Galileo Galilei',
+      'Niels Bohr',
+    ],
+    image: require('../../assets/images/quizimages/modernphysics.jpg'),
+    answer: 'Albert Einstein',
+  },
+  {
+    question: 'In which year did the Titanic sink?',
+    options: ['1912', '1905', '1898', '1920'],
+    image: require('../../assets/images/quizimages/titanic.jpg'),
+    answer: '1912',
+  },
+];
+
 export {
   appName,
   ageObject,
   dummyText,
   signUpTools,
   genderObject,
+  quizQuestions,
   favTopicLists,
   quizCategories,
   SignupDeviceTools,

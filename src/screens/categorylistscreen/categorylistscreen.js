@@ -26,9 +26,10 @@ const CategoryListScreen = ({navigation}) => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      <BackNavHeader navigation={navigation} pageTitle={'History Quiz'} />
+      {/* <BackNavHeader navigation={navigation} pageTitle={'History Quiz'} /> */}
       <rn.View style={styles.quizListContainer}>
-        <rn.ScrollView contentContainerStyle={{gap: wp(16)}}>
+        <rn.ScrollView
+          contentContainerStyle={{gap: wp(10), alignItems: 'center'}}>
           {dummyArray.map((dummy, index) => {
             return (
               <QuizLevelCard key={index} onPressQuizCard={onPressQuizCard} />
@@ -51,8 +52,9 @@ const styles = rn.StyleSheet.create({
 
   quizListContainer: {
     flex: 12,
-    width: '100%',
     height: '100%',
+    padding: wp(10),
+    paddingBottom: wp(30),
   },
 
   appNameTextStyle: {

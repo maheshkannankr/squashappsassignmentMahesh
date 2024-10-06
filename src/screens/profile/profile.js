@@ -1,6 +1,6 @@
 import React from 'react';
 import {wp, hp} from '../../utils/dimension';
-import {colors} from '../../themes';
+import {colors, fontfamily} from '../../themes';
 import * as rn from 'react-native';
 import {Icons} from '../../components';
 import fontsize from '../../themes/fontsize';
@@ -181,7 +181,7 @@ const styles = rn.StyleSheet.create({
   },
 
   performanceCategoryTitleText: {
-    fontWeight: '900',
+    fontFamily: fontfamily.fBold,
     fontSize: fontsize.headingSize,
   },
 
@@ -200,6 +200,7 @@ const styles = rn.StyleSheet.create({
 
   lengendTitleText: {
     fontSize: fontsize.descriptionSize,
+    fontFamily: fontfamily.fRegular,
   },
   lengendsViewContainer: {
     flex: 1,
@@ -230,7 +231,7 @@ const styles = rn.StyleSheet.create({
 
   rankContainerRankTitleText: {
     fontSize: fontsize.normalSize,
-    fontWeight: '900',
+    fontFamily: fontfamily.fBold,
     color: colors.themePrimary,
   },
 
