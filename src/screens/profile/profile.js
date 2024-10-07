@@ -32,8 +32,9 @@ const ProfileScreen = ({navigation}) => {
 
   const renderProfilePhotoView = () => {
     return (
-      <rn.View>
+      <rn.View style={styles.profileImageContainer}>
         <rn.Image
+          style={styles.profileImageView}
           source={require('../../../assets/images/profile/profileimage.png')}
         />
       </rn.View>
@@ -161,6 +162,17 @@ const styles = rn.StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  profileImageContainer: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+  },
+
+  profileImageView: {
+    flex: 1,
+    aspectRatio: 1,
   },
 
   profilePerformanceContainer: {
