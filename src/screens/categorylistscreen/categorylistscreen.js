@@ -26,22 +26,27 @@ const CategoryListScreen = ({navigation}) => {
         styles.container,
         {backgroundColor: isDarkMode ? colors.black : colors.white},
       ]}>
-      {/* <BackNavHeader navigation={navigation} pageTitle={'History Quiz'} /> */}
-      <rn.View style={styles.quizListContainer}>
-        <rn.ScrollView
-          contentContainerStyle={{gap: wp(10), alignItems: 'center'}}>
-          {dummyArray.map((dummy, index) => {
-            return (
-              <QuizLevelCard key={index} onPressQuizCard={onPressQuizCard} />
-            );
-          })}
-        </rn.ScrollView>
-      </rn.View>
+      <BackNavHeader navigation={navigation} pageTitle={'History Quiz'} />
+
+      <rn.ScrollView
+        style={styles.quizListContainer}
+        contentContainerStyle={{gap: wp(10), alignItems: 'center'}}>
+        {dummyArray.map((dummy, index) => {
+          return (
+            <QuizLevelCard key={index} onPressQuizCard={onPressQuizCard} />
+          );
+        })}
+        <rn.View style={styles.emptyViewContainer} />
+      </rn.ScrollView>
     </rn.View>
   );
 };
 
 const styles = rn.StyleSheet.create({
+  emptyViewContainer: {
+    height: hp(10),
+  },
+
   container: {
     flex: 1,
     gap: hp(16),

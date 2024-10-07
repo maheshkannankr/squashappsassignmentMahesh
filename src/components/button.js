@@ -19,7 +19,7 @@ const Button = ({
   };
   return (
     <rn.TouchableOpacity
-      activeOpacity={0.8}
+      activeOpacity={isDisabled ? 1 : 0.8}
       style={[
         styles.container,
         {
@@ -66,7 +66,7 @@ const styles = rn.StyleSheet.create({
   buttonLabelTextStyle: {
     color: colors.white,
     fontSize: fontsize.buttonText,
-    fontFamily: fontfamily.fRegular,
+    fontFamily: fontfamily.fSemiBold,
   },
 });
 export default Button;

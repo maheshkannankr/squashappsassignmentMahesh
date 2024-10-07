@@ -66,11 +66,16 @@ const HomeScreen = ({navigation}) => {
       </rn.View>
       <Categories onClickSeeAllLink={navigateToCategoryScreen} />
       <UnfinishedQuiz />
+      <rn.View style={styles.emptyContentView} />
     </rn.ScrollView>
   );
 };
 
 const styles = rn.StyleSheet.create({
+  emptyContentView: {
+    height: hp(70),
+  },
+
   container: {
     flex: 1,
     padding: wp(15),

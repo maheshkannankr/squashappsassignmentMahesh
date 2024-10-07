@@ -156,7 +156,10 @@ const QuizTestScreen = ({navigation}) => {
           onTouchButton={onPressPrevButton}
           isDisabled={currentQuestionIndex === 0}
         />
-        <Button label="Next" onTouchButton={onPressNextButton} />
+        <Button
+          label={currentQuestionIndex === 9 ? 'Submit' : 'Next'}
+          onTouchButton={onPressNextButton}
+        />
       </rn.View>
     );
   };
