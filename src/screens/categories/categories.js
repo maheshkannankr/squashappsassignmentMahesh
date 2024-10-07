@@ -41,11 +41,16 @@ const CategoryScreen = ({navigation}) => {
           />
         );
       })}
+      <rn.View style={styles.emptyContentView} />
     </rn.ScrollView>
   );
 };
 
 const styles = rn.StyleSheet.create({
+  emptyContentView: {
+    height: hp(70),
+  },
+
   container: {
     flex: 1,
     gap: hp(16),

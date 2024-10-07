@@ -143,14 +143,19 @@ const ProfileScreen = ({navigation}) => {
       {renderProfilePhotoView()}
       {renderProfileRankingView()}
       {renderProfilePerformanceView()}
+      <rn.View style={styles.emptyContentView} />
     </rn.View>
   );
 };
 
 const styles = rn.StyleSheet.create({
+  emptyContentView: {
+    height: hp(50),
+  },
+
   container: {
     flex: 1,
-    gap: hp(16),
+    gap: hp(10),
     padding: wp(10),
     width: '100%',
     height: '100%',
@@ -158,13 +163,9 @@ const styles = rn.StyleSheet.create({
     justifyContent: 'center',
   },
 
-  appNameTextStyle: {
-    fontSize: fontsize.appTitle,
-  },
-
   profilePerformanceContainer: {
     flex: 2.5,
-    elevation: 4,
+    elevation: 2,
     width: '100%',
     padding: wp(20),
     columnGap: wp(10),
@@ -213,7 +214,7 @@ const styles = rn.StyleSheet.create({
 
   profileRankingContainer: {
     flex: 1,
-    elevation: 4,
+    elevation: 2,
     width: '100%',
     paddingVertical: wp(10),
     paddingHorizontal: wp(30),
@@ -237,7 +238,7 @@ const styles = rn.StyleSheet.create({
 
   rankContainerRankValueText: {
     fontSize: fontsize.normalSize,
-    fontWeight: '900',
+    fontFamily: fontfamily.fSemiBold,
   },
 });
 export default ProfileScreen;

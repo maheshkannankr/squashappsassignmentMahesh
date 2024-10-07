@@ -92,6 +92,7 @@ const styles = rn.StyleSheet.create({
     flex: 1,
     resizeMode: 'contain',
     width: '100%',
+    aspectRatio: 3 / 2,
   },
 
   starView: {
