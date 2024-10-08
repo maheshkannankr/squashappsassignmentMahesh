@@ -7,6 +7,7 @@ import SplashScreen from './splashscreen/splashscrn';
 import FillProfileScreen from './fillprofile/fillprofile';
 import QuizTestScreen from './quiztestscreen/quiztestscreen';
 import TabNavigation from './bottomtabnavigator/tabnavigation';
+import TestResultScreen from './testresultscreen/testresultscreen';
 import OnBoardingScreen from './onboardingscreen/onboardingscreen';
 import LanguageSelectionScreen from './langselectionscreen/languageselectionscreen';
 
@@ -20,6 +21,7 @@ export {
   QuizTestScreen,
   CategoryScreen,
   OnBoardingScreen,
+  TestResultScreen,
   FillProfileScreen,
   LanguageSelectionScreen,
 };

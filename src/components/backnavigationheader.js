@@ -5,7 +5,13 @@ import fontsize from '../themes/fontsize';
 import {colors, fontfamily} from '../themes';
 import {hp, wp} from '../utils/dimension';
 
-const BackNavHeader = ({pageTitle, navigation}) => {
+const BackNavHeader = ({
+  pageTitle,
+  navigation,
+  bgColor,
+  titleTextColor,
+  noDarkModeEffect = false,
+}) => {
   const isDarkMode = rn.useColorScheme() === 'dark';
 
   const onPressBackIcon = () => {
@@ -13,14 +19,29 @@ const BackNavHeader = ({pageTitle, navigation}) => {
   };
 
   return (
-    <rn.View style={styles.titleContainer}>
+    <rn.View style={[styles.titleContainer, {backgroundColor: bgColor}]}>
       <rn.TouchableOpacity onPress={onPressBackIcon}>
-        <Icons.LeftArrow color={isDarkMode ? colors.white : colors.black} />
+        <Icons.LeftArrow
+          color={
+            !noDarkModeEffect && isDarkMode
+              ? colors.white
+              : titleTextColor
+              ? titleTextColor
+              : colors.black
+          }
+        />
       </rn.TouchableOpacity>
       <rn.Text
         style={[
           styles.titleTextStyle,
-          {color: isDarkMode ? colors.white : colors.primaryFont},
+          {
+            color:
+              !noDarkModeEffect && isDarkMode
+                ? colors.white
+                : titleTextColor
+                ? titleTextColor
+                : colors.primaryFont,
+          },
         ]}>
         {pageTitle}
       </rn.Text>

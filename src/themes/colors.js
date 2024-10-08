@@ -14,5 +14,8 @@ export default {
   favItemCardBackGround: '#DDDDDD',
   selectedOptionBackground: '#FFC1F3',
   placeHolderFontColor: '#6B6B6B',
+  rankStandingBgColor: '#F974DF',
   disabledText: '#A1A1A1',
+  correctAnswerBackground: '#C7FFC1',
+  incorrectAnsBackGround: '#FFC1C2',
 };

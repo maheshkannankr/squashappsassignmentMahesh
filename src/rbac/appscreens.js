@@ -10,6 +10,7 @@ import {
   FillProfileScreen,
   LanguageSelectionScreen,
   QuizTestScreen,
+  TestResultScreen,
 } from '../screens';
 import CategoryListScreen from '../screens/categorylistscreen/categorylistscreen';
 import FavTopicScreen from '../screens/choosefavtopic/choosefavtopicscreen';
@@ -92,6 +93,12 @@ const AppScreens = {
     name: 'quizTestScreen',
     title: 'Quiz Test Screen',
     component: QuizTestScreen,
+  },
+  TestResultScreen: {
+    headerShown: false,
+    name: 'testResultScreen',
+    title: 'Test Result Screen',
+    component: TestResultScreen,
   },
 };
 

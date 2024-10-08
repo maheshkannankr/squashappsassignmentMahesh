@@ -1,11 +1,14 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {wp, hp} from '../../utils/dimension';
 import {colors, fontfamily, fontsize} from '../../themes';
 import * as rn from 'react-native';
 import {BackNavHeader, Button, Icons} from '../../components';
 import {quizQuestions} from '../../utils';
+import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
-const QuizTestScreen = ({navigation}) => {
+const QuizTestScreen = ({route, navigation}) => {
+  const reviewAnswers = route?.params;
+
   const [{question, options, image}, setQuestionsOptions] = useState({
     question: '',
     options: ['', '', '', ''],
@@ -16,6 +19,8 @@ const QuizTestScreen = ({navigation}) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const questionsSet = quizQuestions;
+
+  const questionSetWithSelectedAnswer = useRef(quizQuestions);
 
   useEffect(() => {
     getCurrentIndexQuestions(currentQuestionIndex);
@@ -41,6 +46,29 @@ const QuizTestScreen = ({navigation}) => {
       getCurrentIndexQuestions(currentIndex);
     }
   };
+
+  const getCorrectAnswersCount = () => {
+    let totalCorrectAnswers = 0;
+    for (let i = 0; i < questionSetWithSelectedAnswer.current.length; i++) {
+      let ques = questionSetWithSelectedAnswer.current[i];
+      if (
+        ques.hasOwnProperty('selectedAnswer') &&
+        ques.selectedAnswer === ques.answer
+      ) {
+        totalCorrectAnswers += 1;
+      }
+    }
+    return totalCorrectAnswers;
+  };
+
+  const onPressSubmitButton = async () => {
+    const correctAnswersCount = await getCorrectAnswersCount();
+    navigation.replace('testResultScreen', {
+      correctAnswersCount,
+      questionSetWithSelectedAnswer,
+    });
+  };
+
   const onPressPrevButton = () => {
     setSelectedOption(null);
     let currentIndex = currentQuestionIndex;
@@ -51,6 +79,8 @@ const QuizTestScreen = ({navigation}) => {
   };
 
   const onSelectOption = optionIndex => {
+    questionSetWithSelectedAnswer.current[currentQuestionIndex].selectedAnswer =
+      options[optionIndex];
     setSelectedOption(optionIndex);
   };
 
@@ -95,20 +125,73 @@ const QuizTestScreen = ({navigation}) => {
     );
   };
 
-  const renderSingleOptionContainer = ({option, isSelected, index}) => {
+  const getOptionBGColor = state => {
+    let color = '';
+    switch (state) {
+      case 'Selected':
+        color = colors.selectedOptionBackground;
+        break;
+      case 'CorrectAnswer':
+        color = colors.correctAnswerBackground;
+        break;
+      case 'InCorrectAnswer':
+        color = colors.incorrectAnsBackGround;
+        break;
+      default:
+        color = isDarkMode ? colors.darkTextBg : colors.white;
+    }
+    return color;
+  };
+
+  const getOptionIcon = state => {
+    switch (state) {
+      case 'Selected':
+        return <Icons.MCQOptionSelected />;
+
+      case 'CorrectAnswer':
+        return <Icons.CorrectOptionIcon />;
+
+      case 'InCorrectAnswer':
+        return <Icons.WrongOptionIcon />;
+
+      default:
+        return <rn.View style={styles.optionUnselectedView} />;
+    }
+  };
+
+  const renderSingleOptionContainer = ({
+    option,
+    isSelected,
+    index,
+    reviewSelectedAnswer,
+    correctAnswer,
+  }) => {
+    let optionState = '';
+    if (isSelected) {
+      optionState = 'Selected';
+    } else if (
+      option === reviewSelectedAnswer &&
+      reviewSelectedAnswer === correctAnswer
+    ) {
+      optionState = 'CorrectAnswer';
+    } else if (
+      option === reviewSelectedAnswer &&
+      reviewSelectedAnswer !== correctAnswer
+    ) {
+      optionState = 'InCorrectAnswer';
+    } else if (option === correctAnswer) {
+      optionState = 'CorrectAnswer';
+    }
     return (
       <rn.TouchableOpacity
+        activeOpacity={reviewAnswers?.reviewTime ? 1 : 0.5}
         style={[
           styles.optionItem,
           {
-            backgroundColor: isSelected
-              ? colors.selectedOptionBackground
-              : isDarkMode
-              ? colors.levelCardBackGround
-              : colors.white,
+            backgroundColor: getOptionBGColor(optionState),
           },
         ]}
-        onPress={() => onSelectOption(index)}>
+        onPress={() => !reviewAnswers?.reviewTime && onSelectOption(index)}>
         <rn.Text
           style={[
             styles.optionText,
@@ -121,11 +204,7 @@ const QuizTestScreen = ({navigation}) => {
           ]}>
           {option}
         </rn.Text>
-        {!isSelected ? (
-          <rn.View style={styles.optionUnselectedView} />
-        ) : (
-          <Icons.MCQOptionSelected />
-        )}
+        {getOptionIcon(optionState)}
       </rn.TouchableOpacity>
     );
   };
@@ -140,6 +219,12 @@ const QuizTestScreen = ({navigation}) => {
                 option: option,
                 isSelected: index === selectedOption,
                 index,
+                reviewSelectedAnswer:
+                  reviewAnswers?.reviewAnswers?.current[currentQuestionIndex]
+                    ?.selectedAnswer,
+                correctAnswer:
+                  reviewAnswers?.reviewAnswers?.current[currentQuestionIndex]
+                    ?.answer,
               })}
             </rn.View>
           );
@@ -158,7 +243,9 @@ const QuizTestScreen = ({navigation}) => {
         />
         <Button
           label={currentQuestionIndex === 9 ? 'Submit' : 'Next'}
-          onTouchButton={onPressNextButton}
+          onTouchButton={
+            currentQuestionIndex === 9 ? onPressSubmitButton : onPressNextButton
+          }
         />
       </rn.View>
     );

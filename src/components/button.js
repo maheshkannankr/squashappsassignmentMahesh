@@ -9,6 +9,7 @@ const Button = ({
   isEmpty = false,
   onTouchButton = () => {},
   isDisabled = false,
+  labelChildren,
 }) => {
   const isDarkMode = rn.useColorScheme() === 'dark';
 
@@ -34,6 +35,7 @@ const Button = ({
         },
       ]}
       onPress={onPresButton}>
+      {labelChildren && labelChildren}
       <rn.Text
         style={[
           styles.buttonLabelTextStyle,
@@ -61,6 +63,8 @@ const styles = rn.StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 1,
     borderRadius: wp(10),
+    flexDirection: 'row',
+    columnGap: wp(10),
   },
 
   buttonLabelTextStyle: {

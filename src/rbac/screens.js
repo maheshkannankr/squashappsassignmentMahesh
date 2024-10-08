@@ -14,6 +14,7 @@ const userLevelScreens = [
   AppScreens.FavTopicScreen,
   AppScreens.CategoryListScreen,
   AppScreens.QuizTestScreen,
+  AppScreens.TestResultScreen,
 ];
 
 export {userLevelScreens};

@@ -6,6 +6,7 @@ export default {
   normalSize: fontSize,
   buttonText: fontSize + wp(6),
   appTitle: fontSize + wp(24),
+  rankText: fontSize + wp(36),
   headingSize: fontSize + wp(12),
   secondaryHeading: fontSize + wp(4),
   descriptionSize: fontSize + wp(2),
