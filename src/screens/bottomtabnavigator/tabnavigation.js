@@ -26,7 +26,7 @@ import {colors, fontfamily} from '../../themes';
 const Tab = createBottomTabNavigator();
 
 const TabButton = props => {
-  const {item, onPress, accessibilityState, isDarkMode} = props;
+  const {item, onPress, accessibilityState, isDarkMode, navigation} = props;
   const focused = accessibilityState.selected;
   return (
     <rn.TouchableOpacity
@@ -37,7 +37,10 @@ const TabButton = props => {
           flex: focused ? 1.5 : 1,
         },
       ]}
-      onPress={onPress}>
+      onPress={() => {
+        navigation.navigate(item.route);
+        onPress();
+      }}>
       {focused ? item.activeIcon : item.inactiveIcon}
       {focused && (
         <rn.Text style={styles.tabItemLabelText}>{item.label}</rn.Text>
@@ -123,7 +126,9 @@ const TabNavigation = ({navigation, props}) => {
               tabBarIcon: ({focused}) =>
                 focused ? tabItem.activeIcon : tabItem.inactiveIcon,
               tabBarShowLabel: false,
-              tabBarButton: props => <TabButton {...props} item={tabItem} />,
+              tabBarButton: props => (
+                <TabButton {...props} item={tabItem} navigation={navigation} />
+              ),
             }}
           />
         );

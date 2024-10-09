@@ -33,6 +33,15 @@ import {quizCategories} from '../../utils';
 
 const Categories = ({navigation, onClickSeeAllLink}) => {
   const isDark = rn.useColorScheme() === 'dark';
+
+  const navigateToCategoryListScreen = () => {
+    navigation.navigate('categoryListScreen');
+  };
+
+  const navigateToCategoryScreen = () => {
+    navigation.jumpTo('Category');
+  };
+
   const renderCatergoryHeadingText = () => {
     return (
       <rn.View style={styles.categoriesHeadingContainer}>
@@ -44,7 +53,7 @@ const Categories = ({navigation, onClickSeeAllLink}) => {
           {'Categories'}
         </rn.Text>
         <rn.Text
-          onPress={onClickSeeAllLink}
+          onPress={navigateToCategoryScreen}
           style={styles.categoriesSeeAllText}>
           {'See All'}
         </rn.Text>
@@ -68,6 +77,7 @@ const Categories = ({navigation, onClickSeeAllLink}) => {
               categoryName={category.name}
               rating={category.rating}
               bgColor={category.bgColor}
+              onPressBanner={navigateToCategoryListScreen}
             />
           );
         })}

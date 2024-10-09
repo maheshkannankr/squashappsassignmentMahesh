@@ -1,56 +1,136 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {wp, hp} from '../../utils/dimension';
 import {colors, fontfamily, fontsize} from '../../themes';
 import * as rn from 'react-native';
+import {Easing} from 'react-native';
+import * as Animatable from 'react-native-animatable';
 
 import {BackNavHeader} from '../../components';
 
-const Polygon = ({pointValue, rank}) => {
-  return (
-    <rn.View style={styles.diamond}>
-      <rn.Text style={styles.rankTextStyle}>{rank}</rn.Text>
-      <rn.Text style={styles.pointTextStyle}>{pointValue}</rn.Text>
-    </rn.View>
-  );
-};
+import RankCard from './rankcard';
+
+import Polygon from './polygonshape';
 
 const RankingScreen = ({navigation}) => {
   const isDarkMode = rn.useColorScheme() === 'dark';
 
+  const viewRef1 = useRef(null);
+  const viewRef2 = useRef(null);
+  const viewRef3 = useRef(null);
+
+  const [tabIndex, setTabIndex] = useState(0);
+
+  // This is effect is to animate the Rank Polygon on loading please use seperate use effect for others
+  useEffect(() => {
+    if (viewRef1.current && viewRef2.current && viewRef3.current) {
+      viewRef1.current.animate(
+        {
+          0: {height: 50}, // Starting height
+          1: {height: 150}, // Ending height
+        },
+        2000,
+      );
+      viewRef2.current.animate(
+        {
+          0: {height: 50},
+          1: {height: 150},
+        },
+        1000,
+      );
+      viewRef3.current.animate(
+        {
+          0: {height: 50},
+          1: {height: 150},
+        },
+        3000,
+      );
+    }
+  });
+
   const renderTabSwitchView = () => {
+    const tabItems = ['Weekly', 'All Time'];
     return (
       <rn.View style={styles.tabSwitchView}>
-        <rn.View style={styles.tabSwitchItemSelectedContainer}>
-          <rn.Text style={styles.tabswitchItemText}>{'Weekly'}</rn.Text>
-        </rn.View>
-        <rn.View style={styles.tabSwitchItemContainer}>
-          <rn.Text style={styles.tabswitchItemText}>{'All Time'}</rn.Text>
-        </rn.View>
+        {tabItems.map((item, index) => {
+          return (
+            <rn.TouchableOpacity
+              key={index}
+              onPress={() => {
+                setTabIndex(index);
+              }}
+              style={
+                index === tabIndex
+                  ? styles.tabSwitchItemSelectedContainer
+                  : styles.tabSwitchItemContainer
+              }>
+              <rn.Text style={styles.tabswitchItemText}>{item}</rn.Text>
+            </rn.TouchableOpacity>
+          );
+        })}
       </rn.View>
     );
   };
   const renderRankStandingsView = () => {
     return (
       <rn.View style={styles.rankStandingsView}>
-        <rn.View style={styles.polygon1}>
-          <Polygon pointValue={3000} rank={2} />
-        </rn.View>
-        <rn.View style={styles.polygon2}>
+        <Animatable.View ref={viewRef1} duration={1500} style={styles.polygon1}>
+          {/*           <rn.View style={styles.photoViewContainerStyle}>
+            <rn.Image
+              style={styles.photoViewStyle}
+              source={require('../../../assets/images/profile/placehoder.jpg')}
+            />
+          </rn.View> */}
+          <Polygon pointValue={2900} rank={2} />
+        </Animatable.View>
+        <Animatable.View ref={viewRef2} duration={1000} style={styles.polygon2}>
           <Polygon pointValue={3000} rank={1} />
-        </rn.View>
-        <rn.View style={styles.polygon3}>
-          <Polygon pointValue={3000} rank={3} />
-        </rn.View>
+        </Animatable.View>
+        <Animatable.View ref={viewRef3} duration={2000} style={styles.polygon3}>
+          <Polygon pointValue={2860} rank={3} />
+        </Animatable.View>
       </rn.View>
     );
   };
+
   const renderRankTableView = () => {
     return (
       <rn.View
         style={[
           styles.rankTableView,
           {backgroundColor: isDarkMode ? colors.black : colors.white},
-        ]}></rn.View>
+        ]}>
+        <rn.View
+          style={[
+            styles.rankTableInnerView,
+            {backgroundColor: isDarkMode ? colors.black : colors.white},
+          ]}>
+          <RankCard
+            name={'John Snow'}
+            index={4}
+            point={2600}
+            photo={require('../../../assets/images/profile/placehoder.jpg')}
+          />
+          <RankCard
+            name={'Arya Stark'}
+            index={5}
+            point={2600}
+            photo={require('../../../assets/images/profile/placehoder.jpg')}
+          />
+          <RankCard
+            name={'Tyrion Lannister'}
+            index={6}
+            point={2600}
+            photo={require('../../../assets/images/profile/placehoder.jpg')}
+          />
+          <RankCard
+            name={'Daenerys Targaryen Targaryen'}
+            index={15}
+            selected={true}
+            point={2600}
+            photo={require('../../../assets/images/profile/placehoder.jpg')}
+          />
+        </rn.View>
+      </rn.View>
     );
   };
   const renderBlankSpace = () => {
@@ -59,7 +139,8 @@ const RankingScreen = ({navigation}) => {
         style={[
           styles.blankSpaceView,
           {backgroundColor: isDarkMode ? colors.black : colors.white},
-        ]}></rn.View>
+        ]}
+      />
     );
   };
   return (
@@ -110,12 +191,13 @@ const styles = rn.StyleSheet.create({
   tabSwitchItemContainer: {
     padding: wp(10),
     paddingHorizontal: wp(50),
-    borderRadius: wp(15),
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent',
   },
+
   tabSwitchItemSelectedContainer: {
+    elevation: 4,
     padding: wp(10),
     paddingHorizontal: wp(50),
     borderRadius: wp(15),
@@ -125,8 +207,8 @@ const styles = rn.StyleSheet.create({
   },
 
   tabswitchItemText: {
-    fontfamily: fontfamily.fRegular,
-    fontSize: fontsize.descriptionSize,
+    fontfamily: fontfamily.fExtraBold,
+    fontSize: fontsize.secondaryHeading,
     color: colors.white,
   },
 
@@ -150,7 +232,19 @@ const styles = rn.StyleSheet.create({
   rankTableView: {
     flex: 3,
     width: '130%',
+    paddingHorizontal: wp(80),
     alignSelf: 'center',
+    borderTopLeftRadius: wp(500),
+    borderTopRightRadius: wp(500),
+    alignItems: 'center',
+  },
+
+  rankTableInnerView: {
+    flex: 1,
+    width: '100%',
+    rowGap: wp(10),
+    alignSelf: 'center',
+    paddingTop: wp(100),
     borderTopLeftRadius: wp(500),
     borderTopRightRadius: wp(500),
     alignItems: 'center',
@@ -199,18 +293,17 @@ const styles = rn.StyleSheet.create({
       },
     ],
   },
-
-  rankTextStyle: {
-    fontFamily: fontfamily.fExtraBold,
-    fontSize: fontsize.rankText,
-    color: colors.white,
-    textAlign: 'center',
+  photoViewContainerStyle: {
+    width: '100%',
+    alignItems: 'center',
+    borderRadius: wp(100),
   },
-  pointTextStyle: {
-    fontFamily: fontfamily.fMedium,
-    color: colors.white,
-    fontSize: fontsize.secondaryHeading,
-    textAlign: 'center',
+
+  photoViewStyle: {
+    flex: 1,
+    resizeMode: 'contain',
+    aspectRatio: 1,
+    borderRadius: wp(50),
   },
 });
 export default RankingScreen;

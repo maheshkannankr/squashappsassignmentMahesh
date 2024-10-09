@@ -5,7 +5,13 @@ import {colors, fontfamily} from '../themes';
 import * as rn from 'react-native';
 import {RatingView} from '../components';
 import fontsize from '../themes/fontsize';
-const CategoryBanner = ({categoryName, rating = 1, sizeSM = true, bgColor}) => {
+const CategoryBanner = ({
+  categoryName,
+  rating = 1,
+  sizeSM = true,
+  bgColor,
+  onPressBanner,
+}) => {
   const playNowButtonView = () => {
     return (
       <rn.View style={styles.playNowButtonView}>
@@ -14,7 +20,7 @@ const CategoryBanner = ({categoryName, rating = 1, sizeSM = true, bgColor}) => {
     );
   };
   return (
-    <rn.View
+    <rn.TouchableOpacity
       style={[
         styles.bannerOuterContainer,
         {
@@ -23,7 +29,8 @@ const CategoryBanner = ({categoryName, rating = 1, sizeSM = true, bgColor}) => {
           backgroundColor: bgColor,
           borderRadius: wp(10),
         },
-      ]}>
+      ]}
+      onPress={onPressBanner}>
       <rn.View style={styles.categoryBannerLeft}>
         <rn.Text style={styles.bannerQuizCategoryNameText}>
           {categoryName}
@@ -38,7 +45,7 @@ const CategoryBanner = ({categoryName, rating = 1, sizeSM = true, bgColor}) => {
           source={require('../../assets/images/homepage/categorybanner/historylego.png')}
         />
       </rn.View>
-    </rn.View>
+    </rn.TouchableOpacity>
   );
 };
 

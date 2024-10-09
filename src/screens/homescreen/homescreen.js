@@ -9,6 +9,7 @@ import Header from './header';
 import ProfileInfo from './profileinfo';
 import Categories from './categories';
 import UnfinishedQuiz from './unfinishedquiz';
+import {useNavigation} from '@react-navigation/native';
 
 /* const Header = () => {};
 const Categories = () => {};
@@ -41,9 +42,6 @@ const HomeScreen = ({navigation}) => {
     setSearchValue(value);
   };
 
-  const navigateToCategoryScreen = () => {
-    navigation.navigate('categoryScreen');
-  };
   return (
     <rn.ScrollView
       style={[
@@ -64,8 +62,10 @@ const HomeScreen = ({navigation}) => {
           style={styles.weekelyBannerView}
         />
       </rn.View>
-      <Categories onClickSeeAllLink={navigateToCategoryScreen} />
-      <UnfinishedQuiz />
+      <Categories
+        navigation={navigation}
+      />
+      <UnfinishedQuiz navigation={navigation} />
       <rn.View style={styles.emptyContentView} />
     </rn.ScrollView>
   );

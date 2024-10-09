@@ -5,8 +5,16 @@ import * as rn from 'react-native';
 import {Icons, QuizLevelCard} from '../../components';
 import fontsize from '../../themes/fontsize';
 
-const UnfinishedQuiz = () => {
+const UnfinishedQuiz = ({navigation}) => {
   const isDark = rn.useColorScheme() === 'dark';
+
+  const navigateToCategoryListScreen = () => {
+    navigation.navigate('categoryListScreen');
+  };
+
+  const navigateToQuizTestScreen = () => {
+    navigation.navigate('quizTestScreen');
+  };
 
   const renderHeadingView = () => {
     return (
@@ -18,7 +26,11 @@ const UnfinishedQuiz = () => {
           ]}>
           {'UnFinished Quiz'}
         </rn.Text>
-        <rn.Text style={styles.unFinishedSeeAllText}>{'See All'}</rn.Text>
+        <rn.Text
+          onPress={navigateToCategoryListScreen}
+          style={styles.unFinishedSeeAllText}>
+          {'See All'}
+        </rn.Text>
       </rn.View>
     );
   };
@@ -26,9 +38,9 @@ const UnfinishedQuiz = () => {
   const renderUnFinishedContentView = () => {
     return (
       <rn.View style={styles.cardContainer}>
-        <QuizLevelCard />
-        <QuizLevelCard />
-        <QuizLevelCard />
+        <QuizLevelCard onPressQuizCard={navigateToQuizTestScreen} />
+        <QuizLevelCard onPressQuizCard={navigateToQuizTestScreen} />
+        <QuizLevelCard onPressQuizCard={navigateToQuizTestScreen} />
       </rn.View>
     );
   };

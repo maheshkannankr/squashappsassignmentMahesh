@@ -166,7 +166,7 @@ const QuizTestScreen = ({route, navigation}) => {
     reviewSelectedAnswer,
     correctAnswer,
   }) => {
-    let optionState = '';
+    let optionState = null;
     if (isSelected) {
       optionState = 'Selected';
     } else if (
@@ -196,8 +196,12 @@ const QuizTestScreen = ({route, navigation}) => {
           style={[
             styles.optionText,
             {
-              color: isDarkMode ? colors.white : colors.primaryFont,
-              fontFamily: isSelected
+              color: optionState
+                ? colors.primaryFont
+                : isDarkMode
+                ? colors.white
+                : colors.primaryFont,
+              fontFamily: optionState
                 ? fontfamily.fSemiBold
                 : fontfamily.fRegular,
             },
