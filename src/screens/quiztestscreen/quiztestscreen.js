@@ -4,7 +4,7 @@ import {colors, fontfamily, fontsize} from '../../themes';
 import * as rn from 'react-native';
 import {BackNavHeader, Button, Icons} from '../../components';
 import {quizQuestions} from '../../utils';
-import {get} from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import Modal from 'react-native-modal';
 
 const QuizTestScreen = ({route, navigation}) => {
   const reviewAnswers = route?.params;
@@ -17,6 +17,8 @@ const QuizTestScreen = ({route, navigation}) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
   const [selectedOption, setSelectedOption] = useState(null);
+
+  const [showUnAnsweredModal, setShowUnAnsweredModal] = useState(false);
 
   const questionsSet = quizQuestions;
 
@@ -61,12 +63,22 @@ const QuizTestScreen = ({route, navigation}) => {
     return totalCorrectAnswers;
   };
 
-  const onPressSubmitButton = async () => {
-    const correctAnswersCount = await getCorrectAnswersCount();
-    navigation.replace('testResultScreen', {
-      correctAnswersCount,
-      questionSetWithSelectedAnswer,
+  const checkAllQuestionsAnswered = () => {
+    let allAnswered = true;
+    questionSetWithSelectedAnswer.current.forEach((item, index) => {
+      if (!item.hasOwnProperty('selectedAnswer')) {
+        allAnswered = false;
+      }
     });
+    return allAnswered;
+  };
+
+  const onPressSubmitButton = () => {
+    if (checkAllQuestionsAnswered()) {
+      onPressModalCloseButton();
+    } else {
+      setShowUnAnsweredModal(true);
+    }
   };
 
   const onPressPrevButton = () => {
@@ -84,7 +96,46 @@ const QuizTestScreen = ({route, navigation}) => {
     setSelectedOption(optionIndex);
   };
 
+  const onPressModalCancelButton = () => {
+    if (showUnAnsweredModal) {
+      setShowUnAnsweredModal(false);
+    }
+  };
+  const onPressModalCloseButton = async () => {
+    const correctAnswersCount = await getCorrectAnswersCount();
+    navigation.replace('testResultScreen', {
+      correctAnswersCount,
+      questionSetWithSelectedAnswer,
+    });
+  };
+
   const isDarkMode = rn.useColorScheme() === 'dark';
+
+  const renderUnansweredWarningModal = () => {
+    return (
+      <Modal isVisible={showUnAnsweredModal}>
+        <rn.View
+          style={[
+            styles.modalViewStyle,
+            {backgroundColor: isDarkMode ? colors.white : colors.borderColor},
+          ]}>
+          <rn.Text style={styles.modalDescriptionTextStyle}>
+            {
+              'There are unanswered questions left and do you still want to submit ?'
+            }
+          </rn.Text>
+          <rn.View style={styles.modalButtonViewContainer}>
+            <Button
+              isEmpty
+              label="Cancel"
+              onTouchButton={onPressModalCancelButton}
+            />
+            <Button label="Continue" onTouchButton={onPressModalCloseButton} />
+          </rn.View>
+        </rn.View>
+      </Modal>
+    );
+  };
 
   const renderIndicatorView = ({currentIndex = 0}) => {
     return (
@@ -267,6 +318,7 @@ const QuizTestScreen = ({route, navigation}) => {
         {renderQuestionImageView()}
         {renderMultipleOptionsView()}
         {renderButtonsView()}
+        {renderUnansweredWarningModal()}
       </rn.View>
     </rn.View>
   );
@@ -357,6 +409,29 @@ const styles = rn.StyleSheet.create({
     flexDirection: 'row',
     columnGap: wp(10),
     alignItems: 'center',
+  },
+
+  modalViewStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    rowGap: hp(25),
+    width: '100%',
+    borderRadius: wp(20),
+    paddingHorizontal: wp(15),
+    paddingVertical: hp(30),
+  },
+
+  modalDescriptionTextStyle: {
+    textAlign: 'center',
+    color: colors.primaryFont,
+    fontFamily: fontfamily.fMedium,
+    fontSize: fontsize.secondaryHeading,
+  },
+
+  modalButtonViewContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    gap: wp(10),
   },
 });
 export default QuizTestScreen;

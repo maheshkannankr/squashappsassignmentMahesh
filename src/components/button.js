@@ -58,6 +58,7 @@ const Button = ({
 const styles = rn.StyleSheet.create({
   container: {
     flex: 1,
+    maxHeight: wp(50),
     height: wp(50),
     alignItems: 'center',
     justifyContent: 'center',

@@ -14,6 +14,7 @@ const LanguageOptionContainer = ({
   languageName,
   onSelectLanguageOption,
 }) => {
+  const [loading, setLoading] = useState(true);
   const isSelected = selectedLangIndex === index;
 
   const onSelectLanguage = () => {
@@ -32,8 +33,25 @@ const LanguageOptionContainer = ({
         },
       ]}
       onPress={onSelectLanguage}>
-      <rn.View style={styles.flagImageStyle}>
-        <rn.Image style={styles.flagImageStyle} source={{uri: flagAddress}} />
+      <rn.View style={[styles.flagImageStyle, {elevation: loading ? 0 : 4}]}>
+        {loading && (
+          <rn.View style={styles.flagImageEmptyViewStyle}>
+            <rn.ActivityIndicator
+              size={'small'}
+              color={colors.themePrimary}
+              style={styles.flagEmptyViewStyle}
+            />
+          </rn.View>
+        )}
+        <rn.Image
+          key={flagAddress} // Ensure re-rendering for new images
+          style={styles.flagImageStyle}
+          source={{uri: flagAddress}}
+          onLoadStart={() => setLoading(true)}
+          onLoadEnd={() => setLoading(false)}
+          onError={() => setLoading(false)} // Handle error case
+          resizeMode="cover"
+        />
       </rn.View>
       <rn.Text style={{color: isDarkMode ? colors.white : colors.primaryFont}}>
         {languageName}
@@ -129,11 +147,21 @@ const styles = rn.StyleSheet.create({
   },
 
   flagImageStyle: {
-    elevation: 4,
     resizeMode: 'stretch',
     height: hp(70),
     width: wp(100),
     borderRadius: wp(10),
+  },
+  flagImageEmptyViewStyle: {
+    resizeMode: 'stretch',
+    height: hp(70),
+    width: wp(100),
+    borderRadius: wp(10),
+  },
+  flagEmptyViewStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
 });
 export default LanguageSelectionScreen;
